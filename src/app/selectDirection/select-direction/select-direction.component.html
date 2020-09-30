@@ -1,0 +1,33 @@
+<article>
+    <h1 color="primary">Discover how to get anywhere by plane, tain, bus, ferry & car</h1>
+    <div>
+        <ul>
+            <li *ngFor="let item of topMenu"><button mat-raised-button>{{item}}</button> </li>
+        </ul>
+
+        <form [formGroup]="directionForm" novalidate (ngSubmit)="onSubmit()">
+            <mat-form-field class="full-width">
+                <input [(ngModel)] = "directionTo" (input)="onChangeFrom($event.target.value)" type="text" placeholder="From" aria-label="Number"
+                    matInput formControlName="fromControl" [matAutocomplete]="auto1">
+                <mat-autocomplete #auto1="matAutocomplete">
+                    <mat-option *ngFor="let item of directionFromArr" [value]="item">
+                        {{item}}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+            <span class="material-icons" (click)="changeDirection()">
+                sync_alt
+            </span>
+            <mat-form-field class="full-width">
+                <input [(ngModel)] = "directionFrom" (input)="onChangeTo($event.target.value)" type="text" placeholder="To" aria-label="Number"
+                    matInput formControlName="toControl" [matAutocomplete]="auto2">
+                <mat-autocomplete #auto2="matAutocomplete">
+                    <mat-option *ngFor="let dir of directionToArr" [value]="dir">
+                        {{dir}}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+            <button mat-flat-button color="accent" type="submit" [disabled]="directionForm.invalid">Let's go</button>
+        </form>
+    </div>
+</article>
