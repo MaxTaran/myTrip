@@ -6,55 +6,55 @@ import { debounceTime, map } from 'rxjs/operators';
 
 const URL = 'MY_URL';
 const path = {
-  Mixed: {
+  mixed: {
     total: {
-      Price: '48',
-      Duration: '22 hours 15 minutes',
+      price: '48',
+      duration: '22 hours 15 minutes',
     },
     details: [
       {
-        From: 'Antwerp',
-        To: 'Bratislava',
-        Price: '48',
-        Transportation: 'Bus',
-        Duration: '22 hours 15 minutes',
+        from: 'Antwerp',
+        to: 'Bratislava',
+        price: '48',
+        transportation: 'Bus',
+        duration: '22 hours 15 minutes',
       },
     ],
   },
-  FlyingRouts: {
+  flyingRouts: {
     total: {
-      Price: '94',
-      Duration: '13 hours 25 minutes',
+      price: '94',
+      duration: '13 hours 25 minutes',
     },
     details: [
       {
-        From: 'Antwerp',
-        To: 'Bordeaux',
-        Price: '49',
-        Transportation: 'Flight',
-        Duration: '4 h 43 minutes',
+        from: 'Antwerp',
+        to: 'Bordeaux',
+        price: '49',
+        transportation: 'Flight',
+        duration: '4 h 43 minutes',
       },
       {
-        From: 'Bordeaux',
-        To: 'Bratislava',
-        Price: '45',
-        Transportation: 'Flight',
-        Duration: '8 h 40minutes',
+        from: 'Bordeaux',
+        to: 'Bratislava',
+        price: '45',
+        transportation: 'Flight',
+        duration: '8 h 40minutes',
       },
     ],
   },
-  GroundRouts: {
+  groundRouts: {
     total: {
-      Price: '94',
-      Duration: '22 hours 25 minutes',
+      price: '94',
+      duration: '22 hours 25 minutes',
     },
     details: [
       {
-        From: 'Antwerp',
-        To: 'Bratislava',
-        Price: '94',
-        Transportation: 'Bus',
-        Duration: '22 hours 25 minutes',
+        from: 'Antwerp',
+        to: 'Bratislava',
+        price: '94',
+        transportation: 'Bus',
+        duration: '22 hours 25 minutes',
       },
     ],
   },
