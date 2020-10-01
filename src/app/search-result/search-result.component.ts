@@ -35,12 +35,10 @@ export class SearchResultComponent implements OnInit {
   }
 
   private activateHandsetLayout() {
-    if (this.currentPaths) {
-      //this.asideRows = this.currentPaths.length + 2;
-    }
+  
     console.log('activateHandsetLayout', this.asideRows);
     this.asideColumns = 4;
-    this.mainRows = 1;
+    this.mainRows = 0;
     this.mainColumns = 0;
   }
 
