@@ -101,19 +101,19 @@ export class HttpService {
 
   private transformTime(minutes: number): string {
     const days = Math.floor(minutes / 60 / 24);
-    const dayStr = days == 0 ? '' : days == 1 ? days + 'day' : days + 'days';
+    const dayStr = days == 0 ? '' : days == 1 ? days + ' day' : days + ' days';
     const hours = Math.floor(minutes / 60 - days * 24);
     const hourStr =
-      hours == 0 ? '' : hours == 1 ? hours + 'hour' : hours + 'hours';
+      hours == 0 ? '' : hours == 1 ? hours + ' hour' : hours + ' hours';
     const min = minutes - days * 24 * 60 - hours * 60;
     const minStr =
-      min == 0 ? '' : min == 1 ? min + 'minute' : min + 'minutes';
+      min == 0 ? '' : min == 1 ? min + ' minute' : min + ' minutes';
     return dayStr + ' ' + hourStr + ' ' + minStr;
   }
 
   private transformPrice(price: number): string {
     const euro = Math.floor(+price);
     const cent = Math.floor(+price - euro)*10;
-    return euro + 'euro'+ ' ' + cent + 'cents';
+    return euro + ' euro'+ ' ' + cent + ' cents';
   }
 }

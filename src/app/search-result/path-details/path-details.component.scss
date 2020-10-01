@@ -9,15 +9,12 @@ article {
   margin: 0.5rem auto;
   padding: 0.5rem;
   background-color: rgba(202, 199, 199, 0.479);
-
   section {
     border-bottom: 1px grey dashed;
     padding: 0.5rem;
     h4 {
-
       color: blue;
       font-weight: 800;
-    
     }
     div {
       display: flex;
@@ -32,12 +29,13 @@ article {
       }
     }
   }
-  section:last-child{
-      border: none;
+  section:last-child {
+    border: none;
   }
   section.totalInfo {
-    box-shadow: 1px 1px 2px 3px rgba(128, 145,230,0.5);
-  background-color:whitesmoke;
-  border: none;
+    box-shadow: 1px 1px 2px 3px rgba(128, 145, 230, 0.5);
+    background-color: whitesmoke;
+    border: none;
+   border-radius: 3px ;
   }
 }

@@ -2,9 +2,9 @@
     <section class="totalInfo">
         <h4>{{rout.pathType}}</h4>
         <div>
-            <p><span>Total price:&ensp;</span>{{rout.details.euro_price}}</p>
+            <p><span>Total:&ensp;</span>{{rout.details.euro_price}}</p>
             <span class="spacer"></span>
-            <p><span>Total time:&ensp;</span>{{rout.details.duration_minutes}}</p>
+            <p><span>Total:&ensp;</span>{{rout.details.duration_minutes}}</p>
         </div>
     </section>
     <section *ngFor="let path of rout.details.direct_paths">
@@ -16,9 +16,13 @@
             <p> <span>Transport:&ensp;</span>{{path.transportation_type}}</p>
         </div>
         <div>
-            <p><span>Price:&ensp;</span> {{path.euro_price}}</p>
+            <p><span class="material-icons">
+                attach_money
+               &ensp;</span> {{path.euro_price}}</p>
             <span class="spacer"></span>
-            <p><span>Iime:&ensp;</span>{{path.duration_minutes }}</p>
+            <p><span class="material-icons">
+                access_time
+                </span>{{path.duration_minutes }}</p>
         </div>
     </section>
 
