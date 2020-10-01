@@ -1,14 +1,11 @@
-<article>
-    <h1 color="primary">Discover how to get anywhere by plane, tain, bus, ferry & car</h1>
-    <div>
-        <ul>
-            <li *ngFor="let item of topMenu"><button mat-raised-button>{{item}}</button> </li>
-        </ul>
-
-        <form [formGroup]="directionForm" novalidate (ngSubmit)="onSubmit()">
+<div class="main">
+    <p color="primary">Discover the cheapest way to get anywhere by plane, train, bus and ride share altogether</p>
+  
+     <form [formGroup]="directionForm" novalidate (ngSubmit)="onSubmit()">
             <mat-form-field class="full-width">
-                <input [(ngModel)] = "directionTo" (input)="onChangeFrom($event.target.value)" type="text" placeholder="From" aria-label="Number"
-                    matInput formControlName="fromControl" [matAutocomplete]="auto1">
+                <input [(ngModel)]="directionTo" (input)="onChangeFrom($event.target.value)" type="text"
+                    placeholder="From" aria-label="Number" matInput formControlName="fromControl"
+                    [matAutocomplete]="auto1">
                 <mat-autocomplete #auto1="matAutocomplete">
                     <mat-option *ngFor="let item of directionFromArr" [value]="item">
                         {{item}}
@@ -19,15 +16,15 @@
                 sync_alt
             </span>
             <mat-form-field class="full-width">
-                <input [(ngModel)] = "directionFrom" (input)="onChangeTo($event.target.value)" type="text" placeholder="To" aria-label="Number"
-                    matInput formControlName="toControl" [matAutocomplete]="auto2">
+                <input [(ngModel)]="directionFrom" (input)="onChangeTo($event.target.value)" type="text"
+                    placeholder="To" aria-label="Number" matInput formControlName="toControl" [matAutocomplete]="auto2">
                 <mat-autocomplete #auto2="matAutocomplete">
                     <mat-option *ngFor="let dir of directionToArr" [value]="dir">
                         {{dir}}
                     </mat-option>
                 </mat-autocomplete>
             </mat-form-field>
-            <button mat-flat-button color="accent" type="submit" [disabled]="directionForm.invalid">Let's go</button>
+            <button mat-flat-button color="primary" type="submit" [disabled]="directionForm.invalid">Let's go</button>
         </form>
-    </div>
-</article>
+    
+</div>

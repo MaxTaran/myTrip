@@ -1,34 +1,25 @@
-<mat-card class="example-card">
-    <mat-card-header>
-        <mat-card-title>Mixed</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-       <p>
-         
-        </p>
-    </mat-card-content>
-</mat-card>
-<mat-card class="example-card">
-    <mat-card-header>
-        <mat-card-title>Flight</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-        <p>
-            The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
-            A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
-            bred for hunting.
-        </p>
-    </mat-card-content>
-</mat-card>
-<mat-card class="example-card">
-    <mat-card-header>
-        <mat-card-title>Ground</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-        <p>
-            The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
-            A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
-            bred for hunting.
-        </p>
-    </mat-card-content>
-</mat-card>
+<article *ngFor="let rout  of paths">
+    <section class="totalInfo">
+        <h4>{{rout.pathType}}</h4>
+        <div>
+            <p><span>Total price:&ensp;</span>{{rout.details.euro_price}}</p>
+            <span class="spacer"></span>
+            <p><span>Total time:&ensp;</span>{{rout.details.duration_minutes}}</p>
+        </div>
+    </section>
+    <section *ngFor="let path of rout.details.direct_paths">
+        <div>
+            <p><span>From:&ensp;</span> {{path.from}}</p>
+            <span class="spacer"></span>
+            <p> <span>To:&ensp;</span>{{path.to}}</p>
+            <span class="spacer"></span>
+            <p> <span>Transport:&ensp;</span>{{path.transportation_type}}</p>
+        </div>
+        <div>
+            <p><span>Price:&ensp;</span> {{path.euro_price}}</p>
+            <span class="spacer"></span>
+            <p><span>Iime:&ensp;</span>{{path.duration_minutes }}</p>
+        </div>
+    </section>
+
+</article>

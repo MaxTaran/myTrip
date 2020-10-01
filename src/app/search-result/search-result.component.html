@@ -1,8 +1,9 @@
-<mat-grid-list cols="4" rowHeight="200px">
-    <mat-grid-tile  class="aside-grid" [colspan]="1" [rowspan]="3">
-      <app-path-details [path]="pathDetails"></app-path-details>
+<mat-grid-list cols="4" rowHeight="90vh">
+    <mat-grid-tile  class="aside-grid" [colspan]="asideColumns" [rowspan]="asideRows">
+      <app-path-details [paths]="currentPaths"></app-path-details>
     </mat-grid-tile>
-    <mat-grid-tile class="main-grid" [colspan]="3" [rowspan]="3" >
+    <mat-grid-tile class="main-grid" [colspan]="mainColumns" [rowspan]="mainColumns" >
         main
     </mat-grid-tile>
-</mat-grid-list>
+</mat-grid-list> 
+

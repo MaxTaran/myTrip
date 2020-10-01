@@ -3,7 +3,7 @@ import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { HttpService } from '../../service/http.service';
 import { Observable, Subject } from 'rxjs';
 
-const TOP_MENU = ['Transport', 'Hotels', 'Other'];
+
 enum PointType {
   From = 'from',
   To = 'to',
@@ -29,7 +29,7 @@ export class SelectDirectionComponent implements OnInit {
   constructor(private httpSrv: HttpService) {}
 
   ngOnInit(): void {
-    this.topMenu = TOP_MENU;
+    
     this.directionFromArr = [];
     this.directionToArr = [];
     this.obsFrom = new Observable<string>();
@@ -55,8 +55,6 @@ export class SelectDirectionComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('directionForm', this.directionFrom);
-    console.log('directionTo', this.directionTo);
     this.httpSrv.selectPath(this.directionFrom, this.directionTo);
   }
 }

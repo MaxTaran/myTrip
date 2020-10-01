@@ -6,8 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  topMenu = ['item-1', 'item-2'];
-  userIsAuthenticated = false;
+ 
   constructor() {}
 
   ngOnInit(): void {}

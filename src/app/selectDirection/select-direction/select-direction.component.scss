@@ -1,63 +1,87 @@
-article {
-  width: 90%;
-  height: auto;
-  margin: 70px auto;
-  padding: 36px;
+* {
+  margin: 0;
+  padding: 0;
+}
 
-  h1 {
+div.main {
+  width: 90%;
+  margin: auto;
+  height: auto;
+  p {
     text-align: center;
+    position: relative;
     color: darkblue;
-    font-size: 2.5rem;
-    margin: 36px auto;
   }
-  div {
-    width: 80%;
-    height: auto;
-    margin: auto;
-    background-color: gray;
-    padding-bottom: 16px;
-    border-radius: 5px;
-    box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.75);
-    ul {
-      display: flex;
-      li {
-        list-style: none;
-        margin: 16px 8px;
-        button:hover {
-          background-color: rgb(241, 132, 105);
-          color: whitesmoke;
-        }
-        button.clicked {
-          background-color: rgb(231, 114, 84);
-          color: white;
-        }
-      }
+  form {
+    position: relative;
+    display: flex;
+    span{
+      position: relative;
+    }
+  }
+}
+@media screen and (max-width: 650px) and (orientation: landscape) {
+  div.main {
+    p {
+      top: 1rem;
+      box-sizing: border-box;
+      width: 100%;
     }
     form {
-      height: auto;
-      width: 95%;
+      top: 1.5rem;
+      width: 100%;
       margin: auto;
-      font-size: 1rem;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      box-sizing: border-box;
+
       mat-form-field {
-        border: 1px solid white;
-        margin: 10px 0px;
-        width: 35%;
-        background-color: rgb(250, 240, 220);
-        padding: 0px 20px;
+        background-color: rgb(219, 224, 223, 0.2);
+        width: 45%;
         border-radius: 5px;
-        box-sizing: content-box;
+        box-sizing: border-box;
       }
       button {
-        margin-left: 16px;
-        color:white;
+        margin: 1rem;
       }
     }
   }
 }
-
-span.material-icons {
-  cursor: pointer;
-  margin: 0 16px;
-  color: white;
-  font-weight: bolder;
+@media screen and (max-width: 480px) {
+  div.main {
+    p {
+      top: 1rem;
+      box-sizing: border-box;
+      padding: 1rem;
+      width: 95%;
+      margin: auto;
+      box-shadow: 0 1px 2px 3px rgba(221, 221, 223, 0.2);
+    }
+    form {
+      top: 2rem;
+      width: 100%;
+      height: auto;
+      flex-direction: column;
+      box-sizing: border-box;
+      align-items: center;
+      justify-content: flex-start;
+      mat-form-field {
+        background-color: rgb(219, 224, 223, 0.2);
+        margin: 0 auto;
+        width: 95%;
+        padding: 0.5rem;
+        border-radius: 5px;
+        box-sizing: border-box;
+      }
+      span {
+        transform: rotate(90deg);
+      }
+      button {
+        align-self: stretch;
+        margin: 1rem;
+      }
+    }
+  }
 }
