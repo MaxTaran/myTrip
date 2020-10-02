@@ -1,6 +1,9 @@
 <mat-grid-list cols="4" rowHeight="600px">
     <mat-grid-tile  class="aside-grid" [colspan]="asideColumns" [rowspan]="asideRows">
-      <app-path-details [paths]="currentPaths"></app-path-details>
+      <app-path-details
+       [paths]="currentPaths" 
+       [startPoint]="startPoint"
+       [endPoint]="endPoint"></app-path-details>
     </mat-grid-tile>
     <mat-grid-tile class="main-grid" [colspan]="mainColumns" [rowspan]="mainColumns" >
         main

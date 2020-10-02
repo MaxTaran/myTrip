@@ -16,6 +16,8 @@ export interface ITile {
 export class SearchResultComponent implements OnInit {
   currentPaths: IPath[];
   length: number;
+  startPoint: string;
+  endPoint: string;
 
   asideRows = 1;
   asideColumns = 1;
@@ -35,8 +37,6 @@ export class SearchResultComponent implements OnInit {
   }
 
   private activateHandsetLayout() {
-  
-    console.log('activateHandsetLayout', this.asideRows);
     this.asideColumns = 4;
     this.mainRows = 0;
     this.mainColumns = 0;
@@ -44,6 +44,8 @@ export class SearchResultComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentPaths = this.httpService.currentPaths;
+    this.startPoint = this.httpService.startPoint;
+    this.endPoint = this.httpService.endPoint;
     this.activateHandsetLayout();
   }
 }

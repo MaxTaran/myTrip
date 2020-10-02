@@ -28,8 +28,7 @@ export class SelectDirectionComponent implements OnInit {
   });
   constructor(private httpSrv: HttpService) {}
 
-  ngOnInit(): void {
-    
+  ngOnInit(): void { 
     this.directionFromArr = [];
     this.directionToArr = [];
     this.obsFrom = new Observable<string>();
@@ -47,7 +46,6 @@ export class SelectDirectionComponent implements OnInit {
   }
 
   changeDirection() {
-    console.log('on change Direction');
     [this.directionFrom, this.directionTo] = [
       this.directionTo,
       this.directionFrom,
@@ -55,6 +53,7 @@ export class SelectDirectionComponent implements OnInit {
   }
 
   onSubmit() {
+   console.log("from", this.directionFrom);
     this.httpSrv.selectPath(this.directionFrom, this.directionTo);
   }
 }

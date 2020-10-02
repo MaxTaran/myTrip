@@ -18,7 +18,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { SearchResultComponent } from './search-result/search-result.component';
 import { PathDetailsComponent } from './search-result/path-details/path-details.component';
-
+import { CapitalLetterPipe } from './search-result/path-details/capitalFirstLetter.pipe';
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,7 +26,8 @@ import { PathDetailsComponent } from './search-result/path-details/path-details.
     TopNavComponent,
     SelectDirectionComponent,
     SearchResultComponent,
-    PathDetailsComponent
+    PathDetailsComponent,
+    CapitalLetterPipe
   ],
   imports: [
     BrowserModule,

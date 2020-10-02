@@ -1,15 +1,45 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { from, Observable, of } from 'rxjs';
 
 const URL = 'MY_URL';
+const PATHMAP = new Map();
+PATHMAP.set('mixed_routes', {
+  type: 'Mixed Trip',
+  icon: `<span class="material-icons">
+commute
+</span>`,
+});
+PATHMAP.set('flying_routes', {
+  type: 'Air Trip',
+  icon: `<span class="material-icons">
+flight
+</span>`,
+});
+PATHMAP.set('ground_routes', {
+  type: 'Ground Trip',
+  icon: `<span class="material-icons" color="primary">
+directions_bus
+</span>`,
+});
+
 const PATHS = `{"mixed_routes":
 {"direct_paths":
 [
-  {"transportation_type":"Bus",
-"euro_price":19.3951,"duration_minutes":3360,"from":"Bournemouth","to":"Bucharest"}
-,{"transportation_type":"Bus","euro_price":12.5216,"duration_minutes":509,"from":"Bucharest","to":"Budapest"}
+  {
+    "transportation_type":"Bus",
+    "euro_price":19.3951,
+    "duration_minutes":3360,
+    "from":"Bournemouth",
+    "to":"Bucharest"},
+    {
+    "transportation_type":"Bus",
+    "euro_price":12.5216,
+    "duration_minutes":509,
+    "from":"Bucharest",
+    "to":"Budapest"}
 ],
 "euro_price":31.0,
 "duration_minutes":3869
@@ -32,7 +62,7 @@ interface IDetails {
 }
 
 export interface IPath {
-  pathType: string;
+  pathType: { type: string; icon: SafeHtml };
   details: IDetails;
 }
 
@@ -41,17 +71,18 @@ export interface IPath {
 })
 export class HttpService {
   currentPaths: IPath[];
-  constructor(private http: HttpClient, private router: Router) {}
+  startPoint: string;
+  endPoint: string;
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private sanitizer: DomSanitizer
+  ) {}
 
   getAutoCompleteData(data: string, type: string): Observable<string[]> {
-    const address =
-      URL +
-      'getLocations?type=' +
-      type +
-      '&search_name=' +
-      encodeURIComponent(data);
+    const address =   URL +   'getLocations?type=' +   type + '&search_name=' +   encodeURIComponent(data);
     from(data).subscribe((res) => {
-      console.log;
+      console.log('HELLO');
     });
     const DIRECTIONS_FROM = [
       'Moscow',
@@ -65,6 +96,8 @@ export class HttpService {
     return of(DIRECTIONS_FROM);
   }
   selectPath(from: string, to: string): void {
+    this.startPoint = from;
+    this.endPoint = to;
     const newPath = JSON.parse(PATHS);
     this.transformObject(newPath);
     this.router.navigate(['/path']);
@@ -74,9 +107,9 @@ export class HttpService {
     let objArr: IPath[] = [];
     for (let i in obj) {
       const transformedDetails = this.transformDetails(obj[i]);
-      const newObj = { pathType: i, details: transformedDetails };
-
-      objArr.push(newObj);
+      const testObj = { pathType: this.mapSanitazing().get(i), details: transformedDetails };
+      const newObj = { pathType: PATHMAP.get(i), details: transformedDetails };
+      objArr.push(testObj);
     }
     this.currentPaths = objArr;
   }
@@ -86,16 +119,14 @@ export class HttpService {
       return {
         ...item,
         duration_minutes: this.transformTime(+obj.duration_minutes),
-        euro_price: this.transformPrice(+obj.euro_price)
+        euro_price: this.transformPrice(+obj.euro_price),
       };
     });
-    console.log('newPAth', newPaths);
     const newObj = {
       direct_paths: newPaths,
       euro_price: this.transformPrice(+obj.euro_price),
       duration_minutes: this.transformTime(+obj.duration_minutes),
     };
-
     return newObj;
   }
 
@@ -113,7 +144,21 @@ export class HttpService {
 
   private transformPrice(price: number): string {
     const euro = Math.floor(+price);
-    const cent = Math.floor(+price - euro)*10;
-    return euro + ' euro'+ ' ' + cent + ' cents';
+    const cent = Math.floor(+price - euro) * 10;
+    return euro + ' euro' + ' ' + cent + ' cents';
+  }
+
+  private mapSanitazing(): Map<string, { type: string; icon: SafeHtml }> {
+    let newMap = new Map<string, { type: string; icon: SafeHtml }>();
+    PATHMAP.forEach((value, key, map) => {
+      const val = {
+        ...value,
+        icon: this.sanitizer.bypassSecurityTrustHtml(value.icon),
+      };
+
+      newMap.set(key, val);
+      return newMap;
+    });
+    return newMap;
   }
 }
