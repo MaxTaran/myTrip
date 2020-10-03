@@ -1,12 +1,11 @@
-<mat-grid-list cols="4" rowHeight="600px">
-    <mat-grid-tile  class="aside-grid" [colspan]="asideColumns" [rowspan]="asideRows">
-      <app-path-details
+<mat-grid-list cols="4" rowHeight="550px">
+    <mat-grid-tile class="aside-grid" [colspan]="asideColumns" [rowspan]="asideRows">
+        <app-path-details
        [paths]="currentPaths" 
        [startPoint]="startPoint"
-       [endPoint]="endPoint"></app-path-details>
+       [endPoint]="endPoint"></app-path-details> 
     </mat-grid-tile>
-    <mat-grid-tile class="main-grid" [colspan]="mainColumns" [rowspan]="mainColumns" >
+    <mat-grid-tile class="main-grid" [colspan]="mainColumns" [rowspan]="mainColumns">
         main
     </mat-grid-tile>
-</mat-grid-list> 
-
+</mat-grid-list>

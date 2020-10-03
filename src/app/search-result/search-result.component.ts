@@ -1,5 +1,7 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { HttpService, IPath } from '../service/http.service';
 
 export interface ITile {
@@ -13,7 +15,7 @@ export interface ITile {
   templateUrl: './search-result.component.html',
   styleUrls: ['./search-result.component.scss'],
 })
-export class SearchResultComponent implements OnInit {
+export class SearchResultComponent implements OnInit, OnDestroy {
   currentPaths: IPath[];
   length: number;
   startPoint: string;
@@ -23,9 +25,13 @@ export class SearchResultComponent implements OnInit {
   asideColumns = 1;
   mainRows = 1;
   mainColumns = 3;
+
+  private querySubscription: Subscription;
+  private pathsSubsciption: Subscription;
   constructor(
-    private httpService: HttpService,
-    breakpointObserver: BreakpointObserver
+    private httpSrv: HttpService,
+    breakpointObserver: BreakpointObserver,
+    route: ActivatedRoute
   ) {
     breakpointObserver
       .observe([Breakpoints.HandsetLandscape, Breakpoints.HandsetPortrait])
@@ -34,6 +40,14 @@ export class SearchResultComponent implements OnInit {
           this.activateHandsetLayout();
         }
       });
+
+    this.querySubscription = route.queryParams.subscribe((queryParam: any) => {
+      this.startPoint = queryParam['from'];
+      this.endPoint = queryParam['to'];
+      this.pathsSubsciption = this.httpSrv
+        .getPaths(this.startPoint, this.endPoint)
+        .subscribe((res) =>   this.currentPaths = res);
+    });
   }
 
   private activateHandsetLayout() {
@@ -43,9 +57,12 @@ export class SearchResultComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.currentPaths = this.httpService.currentPaths;
-    this.startPoint = this.httpService.startPoint;
-    this.endPoint = this.httpService.endPoint;
+    this.currentPaths = this.httpSrv.currentPaths;
     this.activateHandsetLayout();
+  }
+
+  ngOnDestroy(): void {
+    this.querySubscription.unsubscribe();
+    this.pathsSubsciption.unsubscribe
   }
 }

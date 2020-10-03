@@ -16,5 +16,6 @@ export class PathDetailsComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
+    
   }
 }

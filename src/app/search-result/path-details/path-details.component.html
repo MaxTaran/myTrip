@@ -1,21 +1,20 @@
-<h3><span>{{startPoint | capitalLetter}}</span> <span class="material-icons">
-        arrow_right_alt
-    </span><span>{{endPoint | capitalLetter}}</span> </h3>
+
+    <h3><span>{{startPoint | capitalLetter}}</span> <span class="material-icons">
+            arrow_right_alt
+        </span><span>{{endPoint | capitalLetter}}</span> </h3>
 <article *ngFor="let rout  of paths">
     <mat-accordion>
-        <mat-expansion-panel hideToggle>
+        <mat-expansion-panel>
             <mat-expansion-panel-header [expandedHeight]="'100px'" [collapsedHeight]="'120px'">
                 <mat-panel-title>
-                    <span [innerHTML]="rout.pathType.icon"></span>
-
+                    <ng-container *ngFor="let icon of rout.pathType.icon"> <span [innerHTML]="icon"></span></ng-container>   
                 </mat-panel-title>
                 <mat-panel-description>
                     <div>
                         <p><span>{{rout.pathType.type}}</span></p>
-                        <p><span>For:&ensp;</span><span>{{rout.details.euro_price}}</span></p>
-                        <p><span>For:&ensp;</span><span>{{rout.details.duration_minutes}}</span></p>
+                        <p><span>Price:&ensp;</span><span>{{rout.details.euro_price}}</span></p>
+                        <p><span>Duation:&ensp;</span><span>{{rout.details.duration_minutes}}</span></p>
                     </div>
-
                 </mat-panel-description>
             </mat-expansion-panel-header>
             <section *ngFor="let path of rout.details.direct_paths">
@@ -35,32 +34,4 @@
             </section>
         </mat-expansion-panel>
     </mat-accordion>
-
-    <!--  <section class="totalInfo">
-        <h4>{{rout.pathType}}</h4>
-        <div>
-            <p><span>Total:&ensp;</span><span>{{rout.details.euro_price}}</span></p>
-            <span class="spacer"></span>
-            <p><span>Total:&ensp;</span><span>{{rout.details.duration_minutes}}</span></p>
-        </div>
-    </section>
-    <section *ngFor="let path of rout.details.direct_paths">
-        <div>
-            <p><span>From:&ensp;</span><span>{{path.from}}</span></p>
-            <span class="spacer"></span>
-            <p> <span>To:&ensp;</span>{{path.to}}</p>
-            <span class="spacer"></span>
-            <p> <span>By:&ensp;</span>{{path.transportation_type}}</p>
-        </div>
-        <div>
-            <p><span>
-                    Price:
-                    &ensp;</span> {{path.euro_price}}</p>
-            <span class="spacer"></span>
-            <p><span>
-                    Duration:
-                </span>{{path.duration_minutes }}</p>
-        </div>
-    </section>
- -->
 </article>

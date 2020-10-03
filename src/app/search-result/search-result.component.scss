@@ -1,13 +1,7 @@
 mat-grid-list {
-  margin-top: 5px;
-  height:400px;
-  width:100%;
-  margin: auto;
-  .aside-grid {
-    overflow-y: scroll;
-    flex-direction: column;
- //   justify-content: flex-start;
-  //  align-items: flex-start;
-
-  }
+  width: 98%;
+  margin:auto;
+  .aside-grid >::ng-deep .mat-figure{
+    align-items: flex-start;
+}
 }

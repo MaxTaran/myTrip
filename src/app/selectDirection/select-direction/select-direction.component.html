@@ -3,12 +3,12 @@
   
      <form [formGroup]="directionForm" novalidate (ngSubmit)="onSubmit()">
             <mat-form-field class="full-width">
-                <input [(ngModel)]="directionFrom" (input)="onChangeFrom($event.target.value)" type="text"
-                    placeholder="From" aria-label="Number" matInput formControlName="fromControl"
+                <input  (input)="onChangeStartPoint($event.target.value)" type="text"
+                    placeholder="From" aria-label="Number" matInput formControlName="startPointControl"
                     [matAutocomplete]="auto1">
-                <mat-autocomplete #auto1="matAutocomplete">
-                    <mat-option *ngFor="let item of directionFromArr" [value]="item">
-                        {{item}}
+                <mat-autocomplete #auto1="matAutocomplete" (optionSelected)='getStartPoint($event.option.value)'>
+                    <mat-option *ngFor="let startP of startPointArr" [value]="startP">
+                        {{startP}}
                     </mat-option>
                 </mat-autocomplete>
             </mat-form-field>
@@ -16,11 +16,11 @@
                 sync_alt
             </span>
             <mat-form-field class="full-width">
-                <input [(ngModel)]="directionTo" (input)="onChangeTo($event.target.value)" type="text"
-                    placeholder="To" aria-label="Number" matInput formControlName="toControl" [matAutocomplete]="auto2">
-                <mat-autocomplete #auto2="matAutocomplete">
-                    <mat-option *ngFor="let dir of directionToArr" [value]="dir">
-                        {{dir}}
+                <input  (input)="onChangeEndPoint($event.target.value)" type="text"
+                    placeholder="To" aria-label="Number" matInput formControlName="endPointControl" [matAutocomplete]="auto2">
+                <mat-autocomplete #auto2="matAutocomplete" (optionSelected)='getEndPoint($event.option.value)'>
+                    <mat-option *ngFor="let endP of endPointArr" [value]="endP">
+                        {{endP}}
                     </mat-option>
                 </mat-autocomplete>
             </mat-form-field>

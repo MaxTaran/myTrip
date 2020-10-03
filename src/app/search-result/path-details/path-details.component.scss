@@ -2,7 +2,6 @@
   width: 100%;
   position: relative;
   height: auto;
-  background-color: rgb(206, 205, 205);
 }
 /* article {
   width: 95%;
@@ -41,19 +40,21 @@
 }
  */
 h3 {
+  width: 100%;
   display: flex;
   justify-content: space-around;
   align-items: flex-end;
   color: blue;
   height: 2em;
-  background-color: rgb(206, 205, 205);
+  background-color: rgb(219, 224, 223, 0.2);
+  position: relative;
+  top: 6px;
 }
 @media screen and (max-width: 650px) and (orientation: portrait) {
   article {
-    width: 99%;
-    margin: 0.5rem auto;
-    padding: 0.5rem;
-    background-color: rgba(221, 221, 221, 0.479);
+    width: 100%;
+
+    background-color: rgb(219, 224, 223, 0.2);
     height: auto;
     mat-accordion {
       width: 100%;
@@ -68,30 +69,37 @@ h3 {
             background-color: rgb(206, 205, 205);
             padding: 1em;
             box-sizing: content-box;
-            span.material-icons {
-              transform: scale(1.5);
-              color: blue;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            span {
+              margin:0;
+              padding:0;
+              span.material-icons {
+                color: blue;
+                margin:0;
+              }
             }
           }
           mat-panel-description {
             font-weight: 400;
-
             box-sizing: content-box;
-        //    background-color: greenyellow;
             width: 100%;
             div {
               margin: 0;
               padding: 0;
               p:first-child {
                 color: blue;
-              //  background-color: hotpink;
-                padding-top:1em;
+                padding-top: 1em;
               }
             }
           }
         }
         section {
           margin-top: 1rem;
+          background-color: rgba(206, 205, 205, 0.884);
+          padding: 5px;
           border-bottom: 1px solid grey;
         }
       }

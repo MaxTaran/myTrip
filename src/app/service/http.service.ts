@@ -2,27 +2,41 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { from, Observable, of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 const URL = 'MY_URL';
 const PATHMAP = new Map();
+enum Icons {
+  FLIGHT = `<span class="material-icons">
+  flight
+  </span>`,
+  BUS = `<span class="material-icons">
+  directions_bus
+  </span>`,
+  TRAIN = `<span class="material-icons">
+  directions_railway
+  </span>`,
+  SUBWAY = `<span class="material-icons">
+  directions_subway
+  </span>`,
+  SHIP = `<span class="material-icons">
+  directions_boat
+  </span>`,
+  ONFOOT = `<span class="material-icons">
+  directions_walk
+  </span>`,
+}
 PATHMAP.set('mixed_routes', {
   type: 'Mixed Trip',
-  icon: `<span class="material-icons">
-commute
-</span>`,
+  icon: [Icons.BUS, Icons.FLIGHT, Icons.SHIP],
 });
 PATHMAP.set('flying_routes', {
   type: 'Air Trip',
-  icon: `<span class="material-icons">
-flight
-</span>`,
+  icon: [Icons.FLIGHT],
 });
 PATHMAP.set('ground_routes', {
   type: 'Ground Trip',
-  icon: `<span class="material-icons" color="primary">
-directions_bus
-</span>`,
+  icon: [Icons.ONFOOT, Icons.SUBWAY],
 });
 
 const PATHS = `{"mixed_routes":
@@ -62,7 +76,7 @@ interface IDetails {
 }
 
 export interface IPath {
-  pathType: { type: string; icon: SafeHtml };
+  pathType: { type: string; icon: SafeHtml[] };
   details: IDetails;
 }
 
@@ -80,10 +94,13 @@ export class HttpService {
   ) {}
 
   getAutoCompleteData(data: string, type: string): Observable<string[]> {
-    const address =   URL +   'getLocations?type=' +   type + '&search_name=' +   encodeURIComponent(data);
-    from(data).subscribe((res) => {
-      console.log('HELLO');
-    });
+    const address =
+      URL +
+      'getLocations?type=' +
+      type +
+      '&search_name=' +
+      encodeURIComponent(data);
+
     const DIRECTIONS_FROM = [
       'Moscow',
       'Tel-Aviv',
@@ -95,23 +112,27 @@ export class HttpService {
     ];
     return of(DIRECTIONS_FROM);
   }
-  selectPath(from: string, to: string): void {
+
+  public getPaths(from: string, to: string): Observable<IPath[]> {
     this.startPoint = from;
     this.endPoint = to;
     const newPath = JSON.parse(PATHS);
-    this.transformObject(newPath);
-    this.router.navigate(['/path']);
+    return this.transformObject(newPath);
   }
 
-  private transformObject(obj: object) {
+  private transformObject(obj: object): Observable<IPath[]> {
     let objArr: IPath[] = [];
     for (let i in obj) {
       const transformedDetails = this.transformDetails(obj[i]);
-      const testObj = { pathType: this.mapSanitazing().get(i), details: transformedDetails };
+      const testObj = {
+        pathType: this.mapSanitazing().get(i),
+        details: transformedDetails,
+      };
       const newObj = { pathType: PATHMAP.get(i), details: transformedDetails };
       objArr.push(testObj);
     }
     this.currentPaths = objArr;
+    return of(objArr);
   }
 
   private transformDetails(obj: IDetails): IDetails {
@@ -145,15 +166,20 @@ export class HttpService {
   private transformPrice(price: number): string {
     const euro = Math.floor(+price);
     const cent = Math.floor(+price - euro) * 10;
-    return euro + ' euro' + ' ' + cent + ' cents';
+    const euroStr = euro == 0 ? '' : euro + ' euro';
+    const centStr = cent == 0 ? '' : cent + ' cent';
+    return euroStr + '' + centStr;
   }
 
-  private mapSanitazing(): Map<string, { type: string; icon: SafeHtml }> {
-    let newMap = new Map<string, { type: string; icon: SafeHtml }>();
+  private mapSanitazing(): Map<string, { type: string; icon: SafeHtml[] }> {
+    let newMap = new Map<string, { type: string; icon: SafeHtml[] }>();
     PATHMAP.forEach((value, key, map) => {
+      const sanitizedArr = value.icon.map((icon) =>
+        this.sanitizer.bypassSecurityTrustHtml(icon)
+      );
       const val = {
         ...value,
-        icon: this.sanitizer.bypassSecurityTrustHtml(value.icon),
+        icon: sanitizedArr,
       };
 
       newMap.set(key, val);

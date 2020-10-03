@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+import { FormControl, FormGroup,  Validators } from '@angular/forms';
 import { HttpService } from '../../service/http.service';
-import { Observable, Subject } from 'rxjs';
+import { Observable} from 'rxjs';
+import { Router } from '@angular/router';
 
 
 enum PointType {
@@ -16,44 +17,54 @@ enum PointType {
 })
 export class SelectDirectionComponent implements OnInit {
   topMenu: string[];
-  directionFromArr: string[];
-  directionToArr: string[];
-  directionFrom = '';
-  directionTo = '';
+  startPointArr: string[];
+  endPointArr: string[];
+  startPoint = '';
+  endPoint = '';
   obsFrom: Observable<string>;
 
   directionForm: FormGroup = new FormGroup({
-    fromControl: new FormControl('', Validators.required),
-    toControl: new FormControl('', Validators.required),
+    startPointControl: new FormControl('', Validators.required),
+    endPointControl: new FormControl('', Validators.required),
   });
-  constructor(private httpSrv: HttpService) {}
+  constructor(private httpSrv: HttpService, private router: Router) {}
 
-  ngOnInit(): void { 
-    this.directionFromArr = [];
-    this.directionToArr = [];
+  ngOnInit(): void {
+    this.startPointArr = [];
+    this.endPointArr = [];
     this.obsFrom = new Observable<string>();
   }
 
-  onChangeFrom(i: any) {
+  onChangeStartPoint(i: any) {
     this.httpSrv
       .getAutoCompleteData(i, PointType.From)
-      .subscribe((response) => (this.directionFromArr = [...response]));
+      .subscribe((response) => (this.startPointArr = [...response]));
   }
-  onChangeTo(i: any) {
+  onChangeEndPoint(i: any) {
     this.httpSrv.getAutoCompleteData(i, PointType.To).subscribe((response) => {
-      this.directionToArr = [...response];
+      this.endPointArr = [...response];
     });
   }
 
   changeDirection() {
-    [this.directionFrom, this.directionTo] = [
-      this.directionTo,
-      this.directionFrom,
-    ];
+    [this.startPoint, this.endPoint] = [this.endPoint, this.startPoint];
+    this.directionForm.controls['endPointControl'].setValue(this.endPoint);
+    this.directionForm.controls['startPointControl'].setValue(this.startPoint);
   }
 
   onSubmit() {
-   console.log("from", this.directionFrom);
-    this.httpSrv.selectPath(this.directionFrom, this.directionTo);
+   
+  //  this.httpSrv.selectPath(this.startPoint, this.endPoint);
+    const queryParams = {from: this.startPoint, to: this.endPoint};
+    this.router.navigate(['/path'], {queryParams});
+
+  }
+
+  getStartPoint(point: string) {
+    this.startPoint = point;
+  }
+
+  getEndPoint(point: string) {
+    this.endPoint = point;
   }
 }
